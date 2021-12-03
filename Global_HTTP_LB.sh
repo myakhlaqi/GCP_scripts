@@ -28,16 +28,26 @@ gcloud config set compute/zone   us-east1-b
 
 #create instances 
 instance_name="nucleus-jumphost"
-gcloud compute instances create www1 \
+gcloud compute instances create $instance_name \
   --image-family debian-9 \
   --image-project debian-cloud \
-  --zone us-central1-a \
-  --tags network-lb-tag \
-  --metadata startup-script="#! /bin/bash
-    sudo apt-get update
-    sudo apt-get install apache2 -y
-    sudo service apache2 restart
-    echo '<!doctype html><html><body><h1>www1</h1></body></html>' | tee /var/www/html/index.html"
+  --machine-type= f1-micro
+
+#==================================================================================
+# Task 2: Create a Kubernetes service cluster
+# There is a limit to the resources you are allowed to create in your project. If you don't get the result you expected, delete the cluster before you create another cluster. If you don't, the lab might end and you might be blocked. In order to get your account unblocked, you will have to reach out to Qwiklabs Support.
+# The team is building an application that will use a service running on Kubernetes. You need to:
+
+# * Create a cluster (in the us-east1-b zone) to host the service.
+# * Use the Docker container hello-app (gcr.io/google-samples/hello-app:2.0) as a place holder; the team will replace the container with their own work later.
+# * Expose the app on port App port number .
+#==================================================================================
+cluster_name="nucleus-cluster1"
+gcloud container clusters create $cluster_name
+  #Get authentication credentials for the cluster
+gcloud container clusters get-credentials $cluster_name
+  #Deply an application
+kubectl create deployment hello-app --image=gcr.io/google-samples/hello-app:2.0
 
 
 
