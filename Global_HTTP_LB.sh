@@ -80,19 +80,21 @@ gcloud container clusters delete $cluster_name
 # 8- Create a forwarding rule.
 #=============================================================================
   # 1- Create an instance template (nucleus-backend-template1).
+cat << EOF > startup.sh
+#! /bin/bash
+apt-get update
+apt-get install -y nginx
+service nginx start
+sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' /var/www/html/index.nginx-debian.html
+EOF
+
 gcloud compute instance-templates create nucleus-backend-template1 \
    --network=default \
    --subnet=default \
    --tags=allow-health-check \
    --image-family=debian-9 \
    --image-project=debian-cloud \
-   --metadata=startup-script="cat << EOF > startup.sh
-      #! /bin/bash
-      apt-get update
-      apt-get install -y nginx
-      service nginx start
-      sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' /var/www/html/index.nginx-debian.html
-      EOF"
+   --metadata-from-file startup-script=startup.sh
   # 2- Create a target pool (nucleus-target-pool1).
 gcloud compute target-pools create nucleus-target-pool1 \
     --http-health-check basic-check
@@ -100,7 +102,10 @@ gcloud compute target-pools create nucleus-target-pool1 \
 #     --instances 
   # 3- Create a managed instance group (nucleus-mig-group1).
 gcloud compute instance-groups managed create nucleus-mig-group1 \
-   --template=nucleus-backend-template1 --size=2 
+   --template=nucleus-backend-template1 \
+   --size=2 \
+   --base-instance-name nginx \
+   --target-pool nucleus-target-pool1
 # 4- Create a firewall rule named as Firewall rule to allow traffic (80/tcp) (nucleus-firewall-rule).
 gcloud compute firewall-rules create nucleus-firewall-rule \
     --network=default \
@@ -133,6 +138,7 @@ gcloud compute forwarding-rules create nucleus-http-content-rule \
     --global \
     --target-http-proxy=nucleus-http-lb-proxy \
     --ports=80
+    #--target-pool nucleus-target-pool1
 
 
 
