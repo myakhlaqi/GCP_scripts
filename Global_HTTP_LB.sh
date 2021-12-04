@@ -31,7 +31,7 @@ instance_name="nucleus-jumphost"
 gcloud compute instances create $instance_name \
   --image-family debian-9 \
   --image-project debian-cloud \
-  --machine-type= f1-micro
+  --machine-type=f1-micro
 
 #==================================================================================
 # Task 2: Create a Kubernetes service cluster
