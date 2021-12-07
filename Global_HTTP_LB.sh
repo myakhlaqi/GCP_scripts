@@ -27,11 +27,12 @@ gcloud config set compute/region us-east1
 gcloud config set compute/zone   us-east1-b
 
 #create instances 
-instance_name="nucleus-jumphost"
+instance_name="nucleus-jumphost-534"
 gcloud compute instances create $instance_name \
   --image-family debian-9 \
   --image-project debian-cloud \
-  --machine-type=f1-micro
+  --machine-type f1-micro
+
 
 #==================================================================================
 # Task 2: Create a Kubernetes service cluster
@@ -49,7 +50,7 @@ gcloud container clusters get-credentials $cluster_name
   #Deply an application
 kubectl create deployment hello-app --image=gcr.io/google-samples/hello-app:2.0
   #Expose app to port 8083 and create a loadbalancer for the container
-kubectl expose deployment hello-server --type=LoadBalancer --port 8083
+kubectl expose deployment hello-app --type=LoadBalancer --port 8082
   #check the settings
 kubectl get service
   #deleting the cluster in case of wrong configration
@@ -85,46 +86,54 @@ cat << EOF > startup.sh
 apt-get update
 apt-get install -y nginx
 service nginx start
-sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' /var/www/html/index.nginx-debian.html
+sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' 
+/var/www/html/index.nginx-debian.html
 EOF
 
 gcloud compute instance-templates create nucleus-backend-template1 \
-   --network=default \
-   --subnet=default \
-   --tags=allow-health-check \
-   --image-family=debian-9 \
-   --image-project=debian-cloud \
-   --metadata-from-file startup-script=startup.sh
+  --metadata-from-file startup-script=startup.sh
+  #  --network=default \
+  #  --subnet=default \
+  #  --tags=allow-health-check \
+  #  --image-family=debian-9 \
+  #  --image-project=debian-cloud \
+   
   # 2- Create a target pool (nucleus-target-pool1).
-gcloud compute target-pools create nucleus-target-pool1 \
-    --http-health-check basic-check
-# gcloud compute target-pools add-instances nucleus-target-pool1 \
-#     --instances 
+gcloud compute target-pools managed create nucleus-target-pool1 
+
+gcloud compute forwarding-rule create nginx-lb \
+  --region us-east1 \
+  --ports=80 \
+  --target-pool nucleus-target-pool1
+
   # 3- Create a managed instance group (nucleus-mig-group1).
 gcloud compute instance-groups managed create nucleus-mig-group1 \
    --template=nucleus-backend-template1 \
    --size=2 \
    --base-instance-name nginx \
    --target-pool nucleus-target-pool1
-# 4- Create a firewall rule named as Firewall rule to allow traffic (80/tcp) (nucleus-firewall-rule).
-gcloud compute firewall-rules create nucleus-firewall-rule \
-    --network=default \
-    --action=allow \
-    --direction=ingress \
-    --target-tags=allow-health-check \
-    --rules=tcp:80
+# 4- Create a firewall rule named as (allow-tcp-rule-402) Firewall rule to allow traffic (80/tcp) (nucleus-firewall-rule).
+  gcloud compute firewall-rules create grant-tcp-rule-657 --allow tcp:80
+# gcloud compute firewall-rules create allow-tcp-rule-402 \
+#     --network=default \
+#     --action=allow \
+#     --direction=ingress \
+#     --target-tags=allow-health-check \
+#     --rules=tcp:80
   # 5- Create a health check.
 gcloud compute health-checks create http http-basic-check \
     --port 80
+
+gcloud compute instance-groups managed set-named-ports nucleus-mig-group1 --named-ports http:80
+
   # 6- Create a backend service, and attach the managed instance group (nucleus-web-backend-service).
 gcloud compute backend-services create nucleus-web-backend-service \
-    --protocol=HTTP \
-    --port-name=http \
-    --health-checks=http-basic-check \
+    --protocol HTTP \
+    --health-checks http-basic-check \
     --global
 gcloud compute backend-services add-backend nucleus-web-backend-service \
-    --instance-group=nucleus-mig-group1 \
-    --instance-group-zone= us-east1-b \
+    --instance-group nucleus-mig-group1 \
+    --instance-group-zone us-east1-b \
     --global
   # 7- Create a URL map, and target the HTTP proxy to route requests to your URL map.
 gcloud compute url-maps create nucleus-web-map-http \
@@ -134,7 +143,6 @@ gcloud compute target-http-proxies create nucleus-http-lb-proxy \
     --url-map nucleus-web-map-http
   # 8- Create a forwarding rule.
 gcloud compute forwarding-rules create nucleus-http-content-rule \
-    --address=lb-ipv4-1\
     --global \
     --target-http-proxy=nucleus-http-lb-proxy \
     --ports=80
