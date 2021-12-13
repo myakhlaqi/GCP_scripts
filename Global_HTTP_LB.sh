@@ -82,6 +82,7 @@ gcloud container clusters delete $cluster_name
 # 7- Create a URL map, and target the HTTP proxy to route requests to your URL map.
 # 8- Create a forwarding rule.
 #=============================================================================
+
   # 1- Create an instance template (nucleus-backend-template1).
 cat << EOF > startup.sh
 #! /bin/bash
