@@ -15,11 +15,14 @@
 gcloud config get-value compute/zone
 # if it didn't set yet. list all configurations to make sure
 gcloud config list --all | grep "zone"
+
 #find the project id and copy it
 gcloud config list projects
+
 #check the current project default settings for zone and region
 # it will show the default zone and region settings. Note them somewhere.
 # e.g: zone: us-east1-b and region :us-east1
+
 gcloud compute project-info describe --project <project_id>
 
 #set the default region/zone for all resources
