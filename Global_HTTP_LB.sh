@@ -36,7 +36,6 @@ gcloud compute instances create $instance_name \
   --image-project debian-cloud \
   --machine-type f1-micro
 
-
 #==================================================================================
 # Task 2: Create a Kubernetes service cluster
 # There is a limit to the resources you are allowed to create in your project. If you don't get the result you expected, delete the cluster before you create another cluster. If you don't, the lab might end and you might be blocked. In order to get your account unblocked, you will have to reach out to Qwiklabs Support.
