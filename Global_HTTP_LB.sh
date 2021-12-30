@@ -23,7 +23,7 @@
 # it will show the default zone and region settings. Note them somewhere.
 # e.g: zone: us-east1-b and region :us-east1
 
-gcloud compute project-info describe --project <project_id>
+  gcloud compute project-info describe --project <project_id>
 
 #set the default region/zone for all resources
 gcloud config set compute/region us-east1
