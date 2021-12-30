@@ -26,7 +26,7 @@
   gcloud compute project-info describe --project <project_id>
 
 #set the default region/zone for all resources
-gcloud config set compute/region us-east1
+  gcloud config set compute/region us-east1
 gcloud config set compute/zone   us-east1-b
 
 #create instances 
