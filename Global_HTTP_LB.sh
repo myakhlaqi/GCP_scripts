@@ -27,7 +27,7 @@
 
 #set the default region/zone for all resources
   gcloud config set compute/region us-east1
-gcloud config set compute/zone   us-east1-b
+  gcloud config set compute/zone   us-east1-b
 
 #create instances 
 instance_name="nucleus-jumphost-534"
