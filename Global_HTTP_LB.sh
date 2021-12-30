@@ -14,7 +14,7 @@
 #check for the default region/zone configration and find the default settings
   gcloud config get-value compute/zone
 # if it didn't set yet. list all configurations to make sure
-gcloud config list --all | grep "zone"
+  gcloud config list --all | grep "zone"
 
 #find the project id and copy it
 gcloud config list projects
