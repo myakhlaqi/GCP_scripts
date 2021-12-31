@@ -18,6 +18,8 @@
 
 
 
+
+
 #find the project id and copy it
   gcloud config list projects
 
