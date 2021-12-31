@@ -16,6 +16,8 @@
 # if it didn't set yet. list all configurations to make sure
   gcloud config list --all | grep "zone"
 
+
+
 #find the project id and copy it
   gcloud config list projects
 
