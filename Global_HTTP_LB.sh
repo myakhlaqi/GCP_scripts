@@ -150,3 +150,6 @@ gcloud compute forwarding-rules create nucleus-http-content-rule \
     --target-http-proxy=nucleus-http-lb-proxy \
     --ports=80
     #--target-pool nucleus-target-pool1
+
+
+
