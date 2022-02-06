@@ -3,28 +3,35 @@
 # Task 1: Create a project jumphost instance
 # You will use this instance to perform maintenance for the project.
 # Requirements:
-# * Name the instance Instance name .
-# * Use an f1-micro machine type.
-# * Use the default image type (Debian Linux).
+  # * Name the instance Instance name .
+  # * Use an f1-micro machine type.
+  # * Use the default image type (Debian Linux).
 #======================rules======================
 # 1) Create all resources in the default region or zone, unless otherwise directed.
 # 2) Naming normally uses the format team-resource; for example, an instance could be named nucleus-webserver1.
 # 3) Allocate cost-effective resource sizes. Projects are monitored, and excessive resource use will result in the containing project's termination (and possibly yours), so plan carefully. This is the guidance the monitoring team is willing to share: unless directed, use f1-micro for small Linux VMs, and use n1-standard-1 for Windows or other applications, such as Kubernetes nodes.
 #=================================================
 #check for the default region/zone configration and find the default settings
-gcloud config get-value compute/zone
+  gcloud config get-value compute/zone
 # if it didn't set yet. list all configurations to make sure
-gcloud config list --all | grep "zone"
+  gcloud config list --all | grep "zone"
+
 #find the project id and copy it
+<<<<<<< HEAD
 gcloud config list project
+=======
+  gcloud config list projects
+
+>>>>>>> af646d63173d57150d2c9d256b07e3eb5044a4cb
 #check the current project default settings for zone and region
 # it will show the default zone and region settings. Note them somewhere.
 # e.g: zone: us-east1-b and region :us-east1
-gcloud compute project-info describe --project <project_id>
+
+  gcloud compute project-info describe --project <project_id>
 
 #set the default region/zone for all resources
-gcloud config set compute/region us-east1
-gcloud config set compute/zone   us-east1-b
+  gcloud config set compute/region us-east1
+  gcloud config set compute/zone   us-east1-b
 
 #create instances 
 instance_name="nucleus-jumphost-534"
@@ -32,7 +39,6 @@ gcloud compute instances create $instance_name \
   --image-family debian-9 \
   --image-project debian-cloud \
   --machine-type f1-micro
-
 
 #==================================================================================
 # Task 2: Create a Kubernetes service cluster
@@ -80,6 +86,7 @@ gcloud container clusters delete $cluster_name
 # 7- Create a URL map, and target the HTTP proxy to route requests to your URL map.
 # 8- Create a forwarding rule.
 #=============================================================================
+
   # 1- Create an instance template (nucleus-backend-template1).
 cat << EOF > startup.sh
 #! /bin/bash
@@ -89,6 +96,7 @@ service nginx start
 sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' 
 /var/www/html/index.nginx-debian.html
 EOF
+
 
 gcloud compute instance-templates create nucleus-backend-template1 \
   --metadata-from-file startup-script=startup.sh
@@ -147,9 +155,12 @@ gcloud compute forwarding-rules create nucleus-http-content-rule \
     --target-http-proxy=nucleus-http-lb-proxy \
     --ports=80
     #--target-pool nucleus-target-pool1
-
-
-
-
-
-
+# or run this command   
+gcloud compute forwarding-rules create nucleus-http-content-rule \
+    --global \
+    --target-http-proxy=nucleus-http-lb-proxy \
+    --ports=8080
+    #--target-pool nucleus-target-pool1
+    
+     
+  
