@@ -17,12 +17,9 @@
   gcloud config list --all | grep "zone"
 
 #find the project id and copy it
-<<<<<<< HEAD
-gcloud config list project
-=======
-  gcloud config list projects
 
->>>>>>> af646d63173d57150d2c9d256b07e3eb5044a4cb
+gcloud config list project
+
 #check the current project default settings for zone and region
 # it will show the default zone and region settings. Note them somewhere.
 # e.g: zone: us-east1-b and region :us-east1
