@@ -25,4 +25,3 @@ kubectl get pods
 
 
 
-
