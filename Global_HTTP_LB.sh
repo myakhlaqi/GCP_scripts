@@ -4,7 +4,7 @@
 # You will use this instance to perform maintenance for the project.
 # Requirements:
 # * Name the instance Instance name .
- # * Use an f1-micro machine type.
+# * Use an f1-micro machine type.
  # * Use the default image type (Debian Linux).
 #======================rules======================
 # 1) Create all resources in the default region or zone, unless otherwise directed.
