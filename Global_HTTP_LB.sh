@@ -3,7 +3,7 @@
 # Task 1: Create a project jumphost instance
 # You will use this instance to perform maintenance for the project.
 # Requirements:
-  # * Name the instance Instance name .
+# * Name the instance Instance name .
   # * Use an f1-micro machine type.
   # * Use the default image type (Debian Linux).
 #======================rules======================
