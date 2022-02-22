@@ -5,7 +5,7 @@
 # Requirements:
 # * Name the instance Instance name .
  # * Use an f1-micro machine type.
-  # * Use the default image type (Debian Linux).
+ # * Use the default image type (Debian Linux).
 #======================rules======================
 # 1) Create all resources in the default region or zone, unless otherwise directed.
 # 2) Naming normally uses the format team-resource; for example, an instance could be named nucleus-webserver1.
