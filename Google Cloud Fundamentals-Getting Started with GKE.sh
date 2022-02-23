@@ -23,3 +23,4 @@ kubectl get services
 kubectl scale deployment nginx --replicas 3
 kubectl get pods
 
+
