@@ -18,7 +18,7 @@ kubectl expose deployment nginx --port 80 --type LoadBalancer
 
 #View the new service:
 kubectl get services
-
+ 
 #Scale up the number of pods running on your service:
 kubectl scale deployment nginx --replicas 3
 kubectl get pods
