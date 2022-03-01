@@ -12,7 +12,7 @@ kubectl create deploy nginx --image=nginx:1.17.10
 
 #View the pod running the nginx container:
 kubectl get pods
-
+ 
 #Expose the nginx container to the Internet:
 kubectl expose deployment nginx --port 80 --type LoadBalancer
 
