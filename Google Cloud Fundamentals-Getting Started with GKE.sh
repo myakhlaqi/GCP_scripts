@@ -9,7 +9,7 @@ kubectl version
  
 #run and deploy a  nginx container on a container
 kubectl create deploy nginx --image=nginx:1.17.10
-
+ 
 #View the pod running the nginx container:
 kubectl get pods
  
