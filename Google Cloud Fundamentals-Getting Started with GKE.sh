@@ -6,7 +6,7 @@ gcloud container clusters create webfrontend --zone $MY_ZONE --num-nodes 2
 
 # check the kubernete version
 kubectl version
-
+ 
 #run and deploy a  nginx container on a container
 kubectl create deploy nginx --image=nginx:1.17.10
 
