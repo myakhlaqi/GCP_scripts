@@ -1,5 +1,5 @@
 #Google Cloud Fundamentals: Getting Started with GKE
- 
+
 export MY_ZONE=us-central1-a
 # create the kubernetes cluster
 gcloud container clusters create webfrontend --zone $MY_ZONE --num-nodes 2
