@@ -60,7 +60,7 @@ kubectl get service
 gcloud container clusters delete $cluster_name
 
 #=============================================================================
-# Task 3: Set up an HTTP load balancer
+# Task 3: Set up an HTTP load balancer 
 # You will serve the site via nginx web servers, but you want to ensure that the environment is fault-tolerant. Create an HTTP load balancer with a managed instance group of 2 nginx web servers. Use the following code to configure the web servers; the team will replace this with their own configuration later.
 
 # There is a limit to the resources you are allowed to create in your project, so do not create more than 2 instances in your managed instance group. If you do, the lab might end and you might be banned.
