@@ -30,6 +30,7 @@ gcloud config list project
   gcloud config set compute/region us-east1
   gcloud config set compute/zone   us-east1-b
 
+
 #create instances 
 instance_name="nucleus-jumphost-534"
 gcloud compute instances create $instance_name \
