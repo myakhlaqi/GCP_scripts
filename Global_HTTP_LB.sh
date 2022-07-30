@@ -20,7 +20,7 @@
 
 gcloud config list project
 
-#check the current project default settings for zone and region
+# check the current project default settings for zone and region
 # it will show the default zone and region settings. Note them somewhere.
 # e.g: zone: us-east1-b and region :us-east1
 
