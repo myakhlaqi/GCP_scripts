@@ -11,7 +11,7 @@
 # 2) Naming normally uses the format team-resource; for example, an instance could be named nucleus-webserver1.
 # 3) Allocate cost-effective resource sizes. Projects are monitored, and excessive resource use will result in the containing project's termination (and possibly yours), so plan carefully. This is the guidance the monitoring team is willing to share: unless directed, use f1-micro for small Linux VMs, and use n1-standard-1 for Windows or other applications, such as Kubernetes nodes.
 #=================================================
-#check for the default region/zone configration and find the default settings
+# check for the default region/zone configration and find the default settings
   gcloud config get-value compute/zone
 # if it didn't set yet. list all configurations to make sure
   gcloud config list --all | grep "zone"
